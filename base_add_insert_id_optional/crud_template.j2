@@ -1,0 +1,44 @@
+# CRUD operations for {{ table_name }}
+from sqlalchemy.orm import Session
+from typing import Optional
+from datetime import datetime, date
+from db_models.models_all_table import {{ model_name }}   # 导入 {{ model_name }} 模型，注意文件位置
+{#from db_models.models_specific_table import {{ model_name }}   # 导入 {{ model_name }} 模型，注意文件位置#}
+
+# 获取单条 {{ table_name }} 数据
+def get_{{ table_name }}(db: Session, {{ primary_key.name }}: {{ primary_key_type }}):
+    result = db.query({{ model_name }}).filter({{ model_name }}.{{ primary_key.name }} == {{ primary_key.name }}).first()
+    return result.to_dict() if result else None
+
+# 获取 {{ table_name }} 列表
+def get_{{ table_name }}_list(db: Session, skip: int = 0, limit: int = 100):
+    {{ table_name }}_list = db.query({{ model_name }}).offset(skip).limit(limit).all()
+    return [item.to_dict() for item in {{ table_name }}_list]
+
+# 创建 {{ table_name }} 数据
+def create_{{ table_name }}(db: Session, {{ non_primary_params }},{{ primary_key.name }}: Optional[{{ primary_key_type }}] = None,):
+    db_{{ table_name }} = {{ model_name }}({{ assignments }})
+    db.add(db_{{ table_name }})
+    db.commit()
+    db.refresh(db_{{ table_name }})
+    return db_{{ table_name }}.to_dict()
+
+# 更新 {{ table_name }} 数据
+def update_{{ table_name }}(db: Session, {{ primary_key.name }}: {{ primary_key_type }}, {{ update_params }}):
+    db_{{ table_name }} = db.query({{ model_name }}).filter({{ model_name }}.{{ primary_key.name }} == {{ primary_key.name }}).first()
+    if db_{{ table_name }}:
+        {% for column in columns %}
+        if {{ column.name }} is not None:
+            db_{{ table_name }}.{{ column.name }} = {{ column.name }}
+        {% endfor %}
+        db.commit()
+        db.refresh(db_{{ table_name }})
+    return db_{{ table_name }}.to_dict() if db_{{ table_name }} else None
+
+# 删除 {{ table_name }} 数据
+def delete_{{ table_name }}(db: Session, {{ primary_key.name }}: {{ primary_key_type }}):
+    db_{{ table_name }} = db.query({{ model_name }}).filter({{ model_name }}.{{ primary_key.name }} == {{ primary_key.name }}).first()
+    if db_{{ table_name }}:
+        db.delete(db_{{ table_name }})
+        db.commit()
+    return True if db_{{ table_name }} else False
