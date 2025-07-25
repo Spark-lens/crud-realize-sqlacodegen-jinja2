@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from sqlalchemy import BigInteger, Column, Date, ForeignKeyConstraint, Integer, LargeBinary, PrimaryKeyConstraint, String, Table
-from db_models.base import Base, Mapped, mapped_column, relationship
+from base import Base, Mapped, mapped_column, relationship
 import datetime
 
 

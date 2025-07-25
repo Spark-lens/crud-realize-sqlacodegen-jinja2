@@ -2,7 +2,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime, date
-from db_models.models_all_table import MockData   # 导入 MockData 模型，注意文件位置
+from lingzhihua_db_models.models_all_table import MockData   # 导入 MockData 模型，注意文件位置
 
 
 # 获取单条 mock_data 数据

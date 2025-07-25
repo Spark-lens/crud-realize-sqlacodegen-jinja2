@@ -2,7 +2,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime, date
-from db_models.models_all_table import VendorParts   # 导入 VendorParts 模型，注意文件位置
+from lingzhihua_db_models.models_all_table import VendorParts   # 导入 VendorParts 模型，注意文件位置
 
 
 # 获取单条 vendor_parts 数据

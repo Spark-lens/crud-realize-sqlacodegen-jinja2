@@ -30,7 +30,7 @@ def generate_specific_table():
     ], stdout=open("./db_models/models_specific_table.py", "w", encoding="utf-8"))
     # 运行后处理脚本替换基类
     subprocess.run([
-        "python", "postprocess_models.py", "./db_models/models_specific_table.py"
+        "python", "postprocess_models.py", "./models/models_specific_table.py"
     ], check=True)
 
 def generate_all_tables():
@@ -43,7 +43,7 @@ def generate_all_tables():
     ], stdout=open("./db_models/models_all_table.py", "w", encoding="utf-8"))
     # 运行后处理脚本替换基类
     subprocess.run([
-        "python", "postprocess_models.py", "./db_models/models_all_table.py"
+        "python", "postprocess_models.py", "./models/db_models.py"
     ], check=True)
     print("ok!")
 

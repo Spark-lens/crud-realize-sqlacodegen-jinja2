@@ -19,32 +19,22 @@ import subprocess
 
 def generate_specific_table():
     """生成指定表的模型文件并自动应用后处理"""
-    # 生成原始模型文件
     subprocess.run([
         "sqlacodegen",
         "--generator", "declarative",
         # "--tables", "parts",  # 只生成 parts 表
         # "--tables", "mock_data,parts,vendors",  # 指定多个表
         "--tables", "vendor_parts",  # 生成 vendor_parts 中间表，连带生成 vendors、parts表
-        "postgresql+psycopg2://postgreRoot:hatech1618@localhost:5432/test"
-    ], stdout=open("./db_models/models_specific_table.py", "w", encoding="utf-8"))
-    # 运行后处理脚本替换基类
-    subprocess.run([
-        "python", "postprocess_models.py", "./models/models_specific_table.py"
-    ], check=True)
+        "postgresql+psycopg2://postgreRoot:hatech1618@10.1.140.170:5432/istorm_aiagent"
+    ], stdout=open("./models_specific_table.py", "w", encoding="utf-8"))
 
 def generate_all_tables():
     """生成所有表的模型文件并自动应用后处理"""
-    # 生成原始模型文件
     subprocess.run([
         "sqlacodegen",
         "--generator", "declarative",
-        "postgresql+psycopg2://postgreRoot:hatech1618@localhost:5432/test"
-    ], stdout=open("./db_models/models_all_table.py", "w", encoding="utf-8"))
-    # 运行后处理脚本替换基类
-    subprocess.run([
-        "python", "postprocess_models.py", "./models/db_models.py"
-    ], check=True)
+        "postgresql+psycopg2://postgreRoot:hatech1618@10.1.140.170:5432/istorm_aiagent"
+    ], stdout=open("./db_models.py", "w", encoding="utf-8"))
 
 if __name__ == "__main__":
     # 生成指定表的模型文件

@@ -5,7 +5,7 @@ def postprocess_model_file(file_path):
         content = f.read()
     
     # 替换基类导入
-    content = content.replace('from sqlalchemy.orm import DeclarativeBase', 'from db_models.base import Base')
+    content = content.replace('from sqlalchemy.orm import DeclarativeBase', 'from models.base import Base')
     # 移除默认Base类定义
     content = content.replace('class Base(DeclarativeBase):\n    pass\n\n', '')
     # 确保所有模型类继承自定义Base
